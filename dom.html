@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic Element Creator</title>
+</head>
+<body>
+    <div class="main-div" ></div>
+    <input placeholder="enter data here">
+    <button onclick="addElement()">Add Element</button>
+    <script>
+        let cnt = 0;
+        
+        function addElement() {
+            const container = document.querySelector(".main-div");
+            const input = document.querySelector("input").value;
+            document.querySelector("input").value = '';
+            const str = `<div style = "background-color: blue" ><h1>${cnt}. ${input}</h1><button onclick="removeElement(${cnt})">delete</button><button onclick="updateElement(${cnt})">update</button><div class="update"></div></div>`;
+            container.innerHTML += str;
+            cnt++;
+        }    
+
+        function updateWithInput(i){
+             const element = document.querySelector(".specific");
+             const newContent = element.querySelector("input").value;
+             element.querySelector("input").value ='';
+   
+             let data = i.toString();
+ 
+             data+=". ";
+               
+              
+                    console.log("newContent "+newContent);
+                    data+=newContent
+                    console.log("i am here lol");
+                    element.querySelector("h1").textContent = data;
+        }
+        function updateElement(index){
+            const elements = document.querySelectorAll(".main-div > div");
+        
+            
+            console.log(elements);
+            for(let i = 0;i<elements.length;i++){
+                let cnt =0;
+                const val = elements[i].querySelector("h1").textContent;
+                for(let j =0;j<val.length;j++){
+                    if(val[j] =='.'){ break;}
+                    cnt = cnt*(10)+(val[j]-'0');
+                }
+               
+                if(cnt == index){
+                    elements[i].setAttribute("class","specific");
+                    const str = `<input placeholder='enter data to be udpate'> <button onclick ='updateWithInput(${index})'>clickToUpdate</button>`;
+                  
+                    elements[i].querySelector(".update").innerHTML = str;
+                 break;
+                }
+        }
+    }
+        function removeElement(index) {
+            const elements = document.querySelectorAll(".main-div > div");
+           
+            console.log(elements);
+            for(let i = 0;i<elements.length;i++){
+                let cnt =0;
+                const val = elements[i].querySelector("h1").textContent;
+                for(let j =0;j<val.length;j++){
+                    if(val[j] =='.'){ break;}
+                    cnt = cnt*(10)+(val[j]-'0');
+                }
+               
+                if(cnt == index){
+                    elements[i].parentElement.removeChild(elements[i]);
+                    break;
+                }
+                
+            }
+          
+        }
+    </script>
+</body>
+</html>
